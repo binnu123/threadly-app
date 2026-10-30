@@ -1,0 +1,50 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Threadly Admin</title>
+<style>
+:root{--bg:#f4f5f9;--card:#fff;--ink:#161a2b;--mute:#7a8099;--ln:#e8eaf2;--acc:#6d4aff;--ok:#16a34a;--wa:#d97706;--er:#dc2626;--in:#2563eb;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e1019;--card:#171a27;--ink:#eceefb;--mute:#8a90ab;--ln:#262a3b;color-scheme:dark}}
+*{box-sizing:border-box}html,body{height:100%;margin:0}body{font-family:Inter,system-ui,sans-serif;background:var(--bg);color:var(--ink);display:flex}
+aside{width:210px;background:var(--card);border-right:1px solid var(--ln);padding:20px 14px;display:flex;flex-direction:column;gap:4px;flex:none}
+aside h1{font-size:18px;margin:0 8px 18px}aside h1 span{color:var(--acc)}
+.nv{display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:12px;color:var(--mute);cursor:pointer;font-size:14px;border:0;background:none;text-align:left;transition:.2s}.nv:hover{background:var(--bg)}.nv.on{background:var(--acc);color:#fff}
+main{flex:1;overflow:auto;padding:26px;min-width:0}
+.hd{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;gap:10px;flex-wrap:wrap}.hd h2{margin:0;font-size:24px;letter-spacing:-.5px}
+.kp{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin-bottom:18px}
+.k{background:var(--card);border:1px solid var(--ln);border-radius:18px;padding:16px;animation:u .4s both}@keyframes u{from{opacity:0;transform:translateY(10px)}}
+.k small{color:var(--mute);font-size:12px}.k b{display:block;font-size:24px;margin-top:6px}.k i{font-style:normal;font-size:12px;color:var(--ok)}
+.cd{background:var(--card);border:1px solid var(--ln);border-radius:18px;padding:18px;margin-bottom:18px;overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:14px;min-width:560px}th{text-align:left;color:var(--mute);font-weight:500;font-size:12px;padding:8px 10px}td{padding:12px 10px;border-top:1px solid var(--ln)}
+.pl{padding:4px 10px;border-radius:999px;font-size:12px;font-weight:600}.Paid,.Delivered,.Active{background:#16a34a22;color:var(--ok)}.Pending,.Packed,.Low{background:#d9770622;color:var(--wa)}.Failed,.Returned,.Out{background:#dc262622;color:var(--er)}.Refunded,.Shipped,.Transit{background:#2563eb22;color:var(--in)}
+.sw{display:inline-block;width:38px;height:38px;border-radius:10px;vertical-align:middle;margin-right:10px}
+.bt{background:var(--acc);color:#fff;border:0;border-radius:12px;padding:10px 16px;font-weight:600;cursor:pointer}.bt.g{background:var(--bg);color:var(--ink);border:1px solid var(--ln);padding:6px 10px;font-size:12px}
+select,input{background:var(--bg);color:var(--ink);border:1px solid var(--ln);border-radius:10px;padding:9px 10px;font-size:14px;width:100%}select.s{width:auto;padding:5px 8px;font-size:12px}
+.bars{display:flex;align-items:flex-end;gap:10px;height:130px}.bars div{flex:1;background:linear-gradient(var(--acc),#c084fc);border-radius:8px 8px 0 0;animation:gr .7s both;position:relative}.bars span{position:absolute;bottom:-20px;left:50%;transform:translateX(-50%);font-size:11px;color:var(--mute)}@keyframes gr{from{height:0!important}}
+.md{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;place-items:center;z-index:9;padding:16px}.md.on{display:grid}.md form{background:var(--card);border-radius:22px;padding:22px;width:100%;max-width:380px;display:grid;gap:10px;animation:u .3s}
+@media(max-width:700px){body{flex-direction:column}aside{width:100%;flex-direction:row;overflow-x:auto;padding:10px;border:0;border-bottom:1px solid var(--ln)}aside h1{display:none}.nv{white-space:nowrap}main{padding:16px}}
+</style></head><body>
+<aside><h1>Threadly <span>Admin</span></h1><button class="nv on" data-v="dash">▦ Dashboard</button><button class="nv" data-v="prod">👕 Products</button><button class="nv" data-v="pay">💳 Payments</button><button class="nv" data-v="ship">📦 Shipments</button></aside>
+<main id="m"></main>
+<div class="md" id="md"><form id="f"><h3 style="margin:0">Add product</h3><input name="n" placeholder="Name" required><input name="p" type="number" placeholder="Price (₹)" required><input name="s" type="number" placeholder="Stock" required><select name="c"><option>Formal</option><option>Casual</option><option>T-Shirts</option></select><button class="bt">Save</button><button type="button" class="bt g" id="x">Cancel</button></form></div>
+<script>
+const $=i=>document.getElementById(i),inr=n=>"₹"+n.toLocaleString("en-IN");
+let prod=[["Oxford Button-Down","Formal",899,42,"#7fb2e5"],["Linen Summer Shirt","Casual",749,18,"#7c8c4a"],["Graphic Tee","T-Shirts",499,6,"#26262b"],["Slim Fit Formal","Formal",1099,0,"#f4f4f1"],["Flannel Check","Casual",999,31,"#c2603a"]].map(a=>({n:a[0],c:a[1],p:a[2],s:a[3],col:a[4]}));
+let pay=[["#1042","Aarav Mehta","UPI",1798,"Paid"],["#1043","Priya Nair","Card",749,"Paid"],["#1044","Rohit Sharma","COD",1099,"Pending"],["#1045","Sneha Rao","Card",499,"Failed"],["#1046","Karan Singh","UPI",999,"Refunded"]].map(a=>({id:a[0],u:a[1],m:a[2],a:a[3],st:a[4]}));
+let shp=[["#1042","Aarav Mehta","Hyderabad","Delhivery","DL88213","Shipped"],["#1043","Priya Nair","Kochi","Blue Dart","BD11972","Delivered"],["#1044","Rohit Sharma","Pune","Ecom Express","EE40018","Packed"],["#1047","Isha Verma","Jaipur","Shiprocket","SR77310","Transit"]].map(a=>({id:a[0],u:a[1],city:a[2],cr:a[3],aw:a[4],st:a[5]}));
+let v="dash";
+const pl=s=>`<span class="pl ${s}">${s}</span>`;
+const stk=s=>s==0?"Out":s<10?"Low":"Active";
+function R(){const m=$("m");
+if(v=="dash"){const rev=pay.filter(x=>x.st=="Paid").reduce((a,b)=>a+b.a,0),b=[40,65,52,80,70,95,60];
+m.innerHTML=`<div class="hd"><h2>Dashboard</h2></div><div class="kp"><div class="k"><small>Revenue</small><b>${inr(rev+18400)}</b><i>▲ 12%</i></div><div class="k"><small>Orders</small><b>${pay.length+37}</b><i>▲ 8%</i></div><div class="k"><small>Pending shipments</small><b>${shp.filter(x=>x.st=="Packed").length}</b></div><div class="k"><small>Low stock</small><b>${prod.filter(p=>p.s<10).length}</b></div></div>
+<div class="cd"><b>Sales this week</b><div class="bars" style="margin:16px 0 22px">${b.map((h,i)=>`<div style="height:${h}%;animation-delay:${i*70}ms"><span>${"MTWTFSS"[i]}</span></div>`).join("")}</div></div>`}
+if(v=="prod")m.innerHTML=`<div class="hd"><h2>Products</h2><button class="bt" id="add">+ Add product</button></div><div class="cd"><table><tr><th>Product</th><th>Category</th><th>Price</th><th>Stock</th><th>Status</th><th></th></tr>${prod.map((p,i)=>`<tr><td><span class="sw" style="background:${p.col}"></span>${p.n}</td><td>${p.c}</td><td>${inr(p.p)}</td><td>${p.s}</td><td>${pl(stk(p.s))}</td><td><button class="bt g" data-r="${i}" data-d="5">+5 stock</button> <button class="bt g" data-x="${i}">Delete</button></td></tr>`).join("")}</table></div>`;
+if(v=="pay")m.innerHTML=`<div class="hd"><h2>Payments</h2><small style="color:var(--mute)">Razorpay</small></div><div class="cd"><table><tr><th>Order</th><th>Customer</th><th>Method</th><th>Amount</th><th>Status</th><th></th></tr>${pay.map((p,i)=>`<tr><td>${p.id}</td><td>${p.u}</td><td>${p.m}</td><td>${inr(p.a)}</td><td>${pl(p.st)}</td><td>${p.st=="Paid"?`<button class="bt g" data-rf="${i}">Refund</button>`:p.st=="Pending"?`<button class="bt g" data-pd="${i}">Mark paid</button>`:""}</td></tr>`).join("")}</table></div>`;
+if(v=="ship")m.innerHTML=`<div class="hd"><h2>Shipments</h2></div><div class="cd"><table><tr><th>Order</th><th>Customer</th><th>City</th><th>Courier</th><th>AWB</th><th>Status</th></tr>${shp.map((s,i)=>`<tr><td>${s.id}</td><td>${s.u}</td><td>${s.city}</td><td>${s.cr}</td><td>${s.aw}</td><td><select class="s" data-s="${i}">${["Packed","Shipped","Transit","Delivered","Returned"].map(o=>`<option ${o==s.st?"selected":""}>${o}</option>`).join("")}</select></td></tr>`).join("")}</table></div>`}
+document.addEventListener("click",e=>{const n=e.target.closest(".nv"),d=e.target.dataset;
+if(n){document.querySelectorAll(".nv").forEach(b=>b.classList.remove("on"));n.classList.add("on");v=n.dataset.v;return R()}
+if(e.target.id=="add")$("md").classList.add("on");if(e.target.id=="x")$("md").classList.remove("on");
+if(d.r!==undefined){prod[+d.r].s+=5;R()}if(d.x!==undefined){prod.splice(+d.x,1);R()}
+if(d.rf!==undefined){pay[+d.rf].st="Refunded";R()}if(d.pd!==undefined){pay[+d.pd].st="Paid";R()}});
+document.addEventListener("change",e=>{if(e.target.dataset.s!==undefined)shp[+e.target.dataset.s].st=e.target.value});
+$("f").addEventListener("submit",e=>{e.preventDefault();const f=new FormData(e.target);prod.unshift({n:f.get("n"),c:f.get("c"),p:+f.get("p"),s:+f.get("s"),col:"#8b5cf6"});e.target.reset();$("md").classList.remove("on");R()});
+R();
+</script></body></html>

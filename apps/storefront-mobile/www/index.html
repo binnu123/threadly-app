@@ -1,0 +1,76 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Threadly Store</title>
+<style>
+:root{--ink:#f5f3ff;--mute:#a9a6c4;--glass:rgba(255,255,255,.08);--bd:rgba(255,255,255,.14);--acc:linear-gradient(135deg,#a78bfa,#f472b6);box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:light){:root:not([data-theme="dark"]){--ink:#1c1530;--mute:#6b6590;--glass:rgba(255,255,255,.55);--bd:rgba(255,255,255,.8)}}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html,body{height:100%;margin:0}
+body{font-family:Inter,system-ui,sans-serif;color:var(--ink);display:flex;justify-content:center;background:#0b0816}
+.app{position:relative;width:100%;max-width:430px;height:100%;overflow:hidden;background:#0b0816}
+@media(prefers-color-scheme:light){:root:not([data-theme="dark"]) .app{background:#efeaff}}
+.bg{position:absolute;inset:0;overflow:hidden}.bg i{position:absolute;border-radius:50%;filter:blur(70px);opacity:.75;animation:fl 14s ease-in-out infinite alternate}
+.bg i:nth-child(1){width:300px;height:300px;background:#7c3aed;top:-80px;left:-80px}.bg i:nth-child(2){width:260px;height:260px;background:#ec4899;top:260px;right:-100px;animation-delay:-5s}.bg i:nth-child(3){width:280px;height:280px;background:#06b6d4;bottom:-60px;left:-60px;animation-delay:-9s;opacity:.5}
+@keyframes fl{to{transform:translate(40px,60px) scale(1.2)}}
+@media(min-width:500px){body{align-items:center;background:#1a1530}.app{height:min(880px,96%);border-radius:38px;box-shadow:0 30px 90px rgba(0,0,0,.5)}}
+.sc{position:absolute;inset:0;overflow-y:auto;padding:18px 18px 120px;scrollbar-width:none}.sc::-webkit-scrollbar{display:none}
+.gl{background:var(--glass);border:1px solid var(--bd);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+.top{display:flex;justify-content:space-between;align-items:center}.top h1{margin:0;font-size:22px;letter-spacing:-.5px}.top small{color:var(--mute)}
+.ib{width:44px;height:44px;border-radius:15px;display:grid;place-items:center;cursor:pointer;position:relative;color:var(--ink)}
+.bdg{position:absolute;top:-5px;right:-5px;background:#f43f5e;color:#fff;font-size:10px;font-weight:700;width:18px;height:18px;border-radius:9px;display:grid;place-items:center;transform:scale(0);transition:.25s cubic-bezier(.3,1.6,.5,1)}.bdg.on{transform:none}
+svg.s{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.hero{margin:18px 0;border-radius:28px;padding:24px;position:relative;overflow:hidden;min-height:190px}
+.hero h2{font-size:34px;line-height:1.02;margin:6px 0 14px;letter-spacing:-1.2px;max-width:190px}.hero p{margin:0;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--mute)}
+.hero .sh{position:absolute;right:-6px;top:20px;width:170px;filter:drop-shadow(0 20px 30px rgba(0,0,0,.4));animation:bob 5s ease-in-out infinite alternate}@keyframes bob{to{transform:translateY(-12px) rotate(4deg)}}
+.btn{border:0;background:var(--acc);color:#fff;font-weight:700;border-radius:14px;padding:12px 20px;cursor:pointer;transition:transform .15s}.btn:active{transform:scale(.95)}
+.chips{display:flex;gap:8px;overflow-x:auto;margin:0 -18px 16px;padding:0 18px;scrollbar-width:none}
+.chip{flex:none;padding:9px 18px;border-radius:999px;cursor:pointer;font-size:14px;transition:.25s}.chip.on{background:var(--acc);border-color:transparent;color:#fff}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.card{border-radius:24px;padding:10px;cursor:pointer;animation:up .5s both;transition:transform .25s}.card:active{transform:scale(.96)}@keyframes up{from{opacity:0;transform:translateY(18px)}}
+.im{height:150px;border-radius:18px;display:grid;place-items:center;position:relative;background:radial-gradient(circle at 50% 40%,rgba(255,255,255,.22),transparent 70%)}.im svg{width:110px;transition:.4s}.card:hover .im svg{transform:scale(1.1) rotate(-3deg)}
+.hr{position:absolute;top:6px;right:6px;width:32px;height:32px;border-radius:50%;border:0;display:grid;place-items:center;cursor:pointer;color:var(--ink)}.hr.on{color:#f43f5e}.hr.on svg{fill:currentColor}
+.card h4{margin:10px 4px 2px;font-size:14px}.card .pr{display:flex;justify-content:space-between;align-items:center;margin:6px 4px 2px}.pr s{color:var(--mute);font-size:12px;margin-left:4px}
+.ad{width:30px;height:30px;border-radius:10px;border:0;background:var(--acc);color:#fff;font-size:18px;cursor:pointer}
+.nav{position:absolute;left:16px;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));height:64px;border-radius:26px;display:flex;justify-content:space-around;align-items:center;z-index:5}
+.nav button{background:none;border:0;color:var(--mute);cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:11px}.nav .on{color:var(--ink)}
+.scrim{position:absolute;inset:0;background:rgba(0,0,0,.5);opacity:0;pointer-events:none;transition:.3s;z-index:20}.scrim.on{opacity:1;pointer-events:auto}
+.sh2{position:absolute;left:0;right:0;bottom:0;border-radius:30px 30px 0 0;padding:14px 20px calc(22px + env(safe-area-inset-bottom,0px));transform:translateY(105%);transition:transform .5s cubic-bezier(.2,.9,.25,1);z-index:30;max-height:88%;overflow:auto;background:rgba(24,18,48,.88)}
+@media(prefers-color-scheme:light){:root:not([data-theme="dark"]) .sh2{background:rgba(255,255,255,.9)}}
+.sh2.on{transform:none}.gb{width:44px;height:5px;border-radius:3px;background:var(--bd);margin:0 auto 14px}
+.bg2{height:220px;border-radius:22px;display:grid;place-items:center;background:radial-gradient(circle,rgba(167,139,250,.35),transparent 70%)}.bg2 svg{width:180px;transition:.3s}
+.l{font-size:13px;color:var(--mute);margin:14px 0 8px}.row{display:flex;gap:10px;flex-wrap:wrap}
+.sw{width:34px;height:34px;border-radius:50%;cursor:pointer;border:2px solid transparent;outline:1px solid var(--bd);transition:.2s}.sw.on{outline:2px solid var(--ink);transform:scale(1.12)}
+.sz{min-width:46px;height:42px;border-radius:12px;background:none;color:var(--ink);cursor:pointer;font-weight:600}.sz.on{background:var(--acc);border-color:transparent;color:#fff}
+.cta{width:100%;height:54px;margin-top:20px;font-size:16px}
+.ci{display:flex;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid var(--bd)}.ci .t{width:56px;height:56px;border-radius:14px;display:grid;place-items:center}.ci svg{width:40px}.ci .m{flex:1}.ci h5{margin:0;font-size:14px}.ci p{margin:2px 0 0;font-size:12px;color:var(--mute)}
+.q{display:flex;align-items:center;gap:8px}.q button{width:26px;height:26px;border-radius:8px;background:none;color:var(--ink);cursor:pointer}
+.tot{display:flex;justify-content:space-between;font-size:18px;font-weight:700;margin-top:16px}
+.toast{position:absolute;top:calc(14px + env(safe-area-inset-top,0px));left:50%;transform:translate(-50%,-90px);padding:10px 16px;border-radius:14px;font-size:13px;z-index:50;transition:.4s cubic-bezier(.2,.9,.25,1)}.toast.on{transform:translate(-50%,0)}
+</style></head><body><div class="app"><div class="bg"><i></i><i></i><i></i></div>
+<div class="sc"><div class="top"><div><small>Free shipping over ₹999</small><h1>Threadly</h1></div><div class="ib gl" id="cb"><svg class="s" viewBox="0 0 24 24"><path d="M6 7h12l-1 13H7z"/><path d="M9 7a3 3 0 016 0"/></svg><span class="bdg" id="bd">0</span></div></div>
+<div class="hero gl"><p>Autumn drop</p><h2>Wear the new<br>season</h2><button class="btn" id="shop">Shop shirts</button><svg class="sh" viewBox="0 0 100 100"><path d="M32 12l-22 12 7 16 10-5v45h46V35l10 5 7-16-22-12-8 8-10-3-10 3z" fill="#a78bfa"/><path d="M50 18v70M43 14l7 12 7-12" fill="none" stroke="rgba(0,0,0,.25)" stroke-width="2"/></svg></div>
+<div class="chips" id="ch"></div><div class="grid" id="g"></div></div>
+<div class="nav gl"><button class="on"><svg class="s" viewBox="0 0 24 24"><path d="M4 11l8-7 8 7v9H4z"/></svg>Home</button><button id="fv"><svg class="s" viewBox="0 0 24 24"><path d="M12 20s-7-4.500-7-10a4 4 0 017-2.500A4 4 0 0119 10c0 5.500-7 10-7 10z"/></svg>Saved</button><button id="c2"><svg class="s" viewBox="0 0 24 24"><path d="M6 7h12l-1 13H7z"/><path d="M9 7a3 3 0 016 0"/></svg>Cart</button><button><svg class="s" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4-6 8-6s7 2 8 6"/></svg>Me</button></div>
+<div class="scrim" id="sc"></div><div class="sh2 gl" id="sh"></div><div class="toast gl" id="ts"></div></div>
+<script>
+const C={Violet:"#8b5cf6",White:"#f4f4f1",Olive:"#7c8c4a",Rust:"#c2603a",Sky:"#7fb2e5",Black:"#26262b"},$=i=>document.getElementById(i);
+const P=[[1,"Oxford Button-Down","Formal",899,1299,["Sky","White","Violet"]],[2,"Linen Summer Shirt","Casual",749,999,["White","Olive","Sky"]],[3,"Graphic Tee","T-Shirts",499,699,["Black","White","Rust"]],[4,"Slim Fit Formal","Formal",1099,1599,["White","Violet","Black"]],[5,"Flannel Check","Casual",999,1399,["Rust","Olive","Violet"]],[6,"Plain Crew Tee","T-Shirts",399,599,["White","Black","Olive"]]].map(a=>({id:a[0],n:a[1],c:a[2],p:a[3],o:a[4],col:a[5]}));
+let cat="All",sv=new Set,cart=[],cur,sel,view="h";
+const sh=(c,t)=>t?`<svg viewBox="0 0 100 100"><path d="M30 14l-20 12 8 14 10-5v46h44V35l10 5 8-14-20-12c-3 6-9 9-20 9s-17-3-20-9z" fill="${c}"/></svg>`:`<svg viewBox="0 0 100 100"><path d="M32 12l-22 12 7 16 10-5v45h46V35l10 5 7-16-22-12-8 8-10-3-10 3z" fill="${c}"/><path d="M50 18v70M43 14l7 12 7-12" fill="none" stroke="rgba(0,0,0,.25)" stroke-width="2"/></svg>`;
+const inr=n=>"₹"+n.toLocaleString("en-IN");
+function ts(m){const t=$("ts");t.textContent=m;t.classList.add("on");clearTimeout(ts.h);ts.h=setTimeout(()=>t.classList.remove("on"),1500)}
+function rc(){$("ch").innerHTML=["All","Formal","Casual","T-Shirts"].map(c=>`<div class="chip gl ${c==cat?"on":""}" data-c="${c}">${c}</div>`).join("")}
+function rg(){const l=P.filter(p=>(cat=="All"||p.c==cat)&&(view!="s"||sv.has(p.id)));
+$("g").innerHTML=l.map((p,i)=>`<div class="card gl" style="animation-delay:${i*60}ms" data-id="${p.id}"><div class="im"><button class="hr gl ${sv.has(p.id)?"on":""}" data-h="${p.id}"><svg class="s" width="16" viewBox="0 0 24 24"><path d="M12 20s-7-4.500-7-10a4 4 0 017-2.500A4 4 0 0119 10c0 5.500-7 10-7 10z"/></svg></button>${sh(C[p.col[0]],p.c=="T-Shirts")}</div><h4>${p.n}</h4><div class="pr"><span><b>${inr(p.p)}</b><s>${inr(p.o)}</s></span><button class="ad" data-a="${p.id}">+</button></div></div>`).join("")||'<p style="grid-column:1/-1;text-align:center;color:var(--mute)">Nothing saved yet</p>'}
+function op(h){$("sh").innerHTML='<div class="gb"></div>'+h;$("sh").classList.add("on");$("sc").classList.add("on")}
+function cl(){$("sh").classList.remove("on");$("sc").classList.remove("on")}
+function dp(){op(`<div class="bg2">${sh(C[sel.c],cur.c=="T-Shirts")}</div><h2 style="margin:16px 0 2px">${cur.n}</h2><div class="l">Colour: ${sel.c}</div><div class="row">${cur.col.map(c=>`<div class="sw ${c==sel.c?"on":""}" data-sw="${c}" style="background:${C[c]}"></div>`).join("")}</div><div class="l">Size</div><div class="row">${["S","M","L","XL","XXL"].map(s=>`<button class="sz gl ${s==sel.s?"on":""}" data-sz="${s}">${s}</button>`).join("")}</div><button class="btn cta" id="ac">Add to cart · ${inr(cur.p)}</button>`)}
+function add(p,c,s){const k=p.id+c+s,f=cart.find(x=>x.k==k);f?f.q++:cart.push({k,p,c,s,q:1});ub();ts("Added to cart")}
+function ub(){const n=cart.reduce((a,b)=>a+b.q,0);$("bd").textContent=n;$("bd").classList.toggle("on",n>0)}
+function sc(){const t=cart.reduce((a,b)=>a+b.q*b.p.p,0);op('<h2 style="margin:0 0 6px">Your cart</h2>'+(cart.length?cart.map((x,i)=>`<div class="ci"><div class="t gl">${sh(C[x.c],x.p.c=="T-Shirts")}</div><div class="m"><h5>${x.p.n}</h5><p>${x.c} · ${x.s} · ${inr(x.p.p)}</p></div><div class="q"><button class="gl" data-q="${i}" data-d="-1">−</button>${x.q}<button class="gl" data-q="${i}" data-d="1">+</button></div></div>`).join("")+`<div class="tot"><span>Total</span><span>${inr(t)}</span></div><button class="btn cta" id="pay">Pay with Razorpay</button>`:'<p style="text-align:center;color:var(--mute);padding:30px 0">Your cart is empty</p>'))}
+document.addEventListener("click",e=>{const t=e.target.closest("[data-c],[data-h],[data-a],[data-id],[data-sw],[data-sz],[data-q]"),i=e.target.id;
+if(e.target.closest("#cb,#c2"))return sc();if(i=="sc")return cl();if(i=="shop")return $("g").scrollIntoView({behavior:"smooth"});
+if(e.target.closest("#fv")){view=view=="s"?"h":"s";rg();return}
+if(i=="ac"){add(cur,sel.c,sel.s);return cl()}if(i=="pay")return ts("Razorpay checkout opens here");if(!t)return;const d=t.dataset;
+if(d.c){cat=d.c;rc();rg()}else if(d.h){sv.has(+d.h)?sv.delete(+d.h):sv.add(+d.h);rg()}else if(d.a){const p=P.find(x=>x.id==+d.a);add(p,p.col[0],"M")}
+else if(d.id){cur=P.find(x=>x.id==+d.id);sel={c:cur.col[0],s:"M"};dp()}else if(d.sw){sel.c=d.sw;dp()}else if(d.sz){sel.s=d.sz;dp()}
+else if(d.q){const x=cart[+d.q];x.q+=+d.d;if(x.q<1)cart.splice(+d.q,1);ub();sc()}});
+rc();rg();
+</script></body></html>

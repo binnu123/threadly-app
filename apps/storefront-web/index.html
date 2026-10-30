@@ -1,0 +1,75 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Maison Shirts</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f3eee6;--card:#fbf8f3;--ink:#1d1a16;--mute:#7b746a;--ln:#ddd5c8;--acc:#1f4d3a;--accink:#fff;--sf:'Fraunces',Georgia,serif;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#14120f;--card:#1c1915;--ink:#f1ebe0;--mute:#9b9384;--ln:#2e2a23;--acc:#d9c9a3;--accink:#14120f;color-scheme:dark}}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,sans-serif}
+.w{max-width:1180px;margin:0 auto;padding:0 22px}
+.bar{background:var(--acc);color:var(--accink);text-align:center;font-size:12px;padding:8px;letter-spacing:.5px}
+header{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--ln)}
+.hd{display:flex;align-items:center;justify-content:space-between;height:66px}
+.logo{font-family:var(--sf);font-size:26px;letter-spacing:-.5px;font-weight:600}.logo i{color:var(--acc)}
+nav{display:flex;gap:26px;font-size:14px;color:var(--mute)}nav a{color:inherit;text-decoration:none;transition:.2s}nav a:hover{color:var(--ink)}
+@media(max-width:700px){nav{display:none}}
+.cb{background:none;border:1px solid var(--ln);border-radius:99px;padding:9px 16px;color:var(--ink);cursor:pointer;font-size:14px;transition:.2s}.cb:hover{background:var(--ink);color:var(--bg)}
+.hero{display:grid;grid-template-columns:1.1fr 1fr;gap:30px;align-items:center;padding:54px 0 40px}
+@media(max-width:800px){.hero{grid-template-columns:1fr;padding-top:30px}}
+.hero small{letter-spacing:3px;font-size:12px;color:var(--mute);text-transform:uppercase}
+.hero h1{font-family:var(--sf);font-weight:400;font-size:clamp(44px,7vw,84px);line-height:.98;letter-spacing:-2px;margin:14px 0 20px}.hero h1 em{color:var(--acc)}
+.hero p{color:var(--mute);max-width:380px;line-height:1.6;margin:0 0 26px}
+.btn{background:var(--acc);color:var(--accink);border:0;border-radius:99px;padding:15px 28px;font-weight:600;cursor:pointer;font-size:14px;transition:.2s}.btn:hover{transform:translateY(-2px)}
+.btn.o{background:none;color:var(--ink);border:1px solid var(--ln);margin-left:8px}
+.arch{position:relative;aspect-ratio:4/5;max-width:440px;margin-left:auto;width:100%;border-radius:999px 999px 24px 24px;background:linear-gradient(160deg,#e3cdb0,#c9a47a);display:grid;place-items:center;overflow:hidden}
+.arch svg{width:70%;filter:drop-shadow(0 24px 24px rgba(0,0,0,.25));animation:sw 6s ease-in-out infinite alternate;transform-origin:50% 0}@keyframes sw{from{transform:rotate(-2.500deg)}to{transform:rotate(2.500deg)}}
+.arch:before{content:"";position:absolute;top:14%;left:10%;right:10%;height:3px;background:#5b4630;border-radius:2px}
+.mq{border-block:1px solid var(--ln);overflow:hidden;white-space:nowrap;padding:14px 0;font-family:var(--sf);font-size:22px}.mq div{display:inline-block;animation:mq 28s linear infinite}.mq span{margin:0 26px;color:var(--mute)}@keyframes mq{to{transform:translateX(-50%)}}
+.sh{display:flex;justify-content:space-between;align-items:end;margin:54px 0 20px;gap:14px;flex-wrap:wrap}.sh h2{font-family:var(--sf);font-weight:400;font-size:38px;margin:0;letter-spacing:-1px}
+.fl{display:flex;gap:8px;flex-wrap:wrap}.fl button{border:1px solid var(--ln);background:none;color:var(--ink);padding:8px 16px;border-radius:99px;cursor:pointer;font-size:13px;transition:.2s}.fl .on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.g{display:grid;grid-template-columns:repeat(4,1fr);gap:22px}@media(max-width:950px){.g{grid-template-columns:repeat(2,1fr);gap:14px}}
+.c{animation:u .5s both}@keyframes u{from{opacity:0;transform:translateY(18px)}}
+.pi{aspect-ratio:3/4;border-radius:18px;background:var(--card);border:1px solid var(--ln);display:grid;place-items:center;position:relative;overflow:hidden;cursor:pointer;transition:background .4s}
+.pi svg{width:62%;transition:transform .5s cubic-bezier(.2,.9,.3,1)}.c:hover .pi svg{transform:scale(1.07) translateY(-4px)}
+.nw{position:absolute;top:12px;left:12px;font-size:11px;background:var(--ink);color:var(--bg);padding:4px 10px;border-radius:99px}
+.qa{position:absolute;left:12px;right:12px;bottom:12px;padding:12px;border-radius:12px;border:0;background:var(--ink);color:var(--bg);font-weight:600;cursor:pointer;transform:translateY(70px);transition:.35s cubic-bezier(.2,.9,.3,1)}.c:hover .qa{transform:none}@media(hover:none){.qa{transform:none}}
+.mt{display:flex;justify-content:space-between;margin:12px 2px 6px;font-size:14px}.mt b{font-weight:500}.mt span{font-variant-numeric:tabular-nums}
+.sw{display:flex;gap:7px;margin:0 2px}.sw i{width:16px;height:16px;border-radius:50%;cursor:pointer;outline:1px solid var(--ln);outline-offset:2px;transition:.2s}.sw i.on{outline:2px solid var(--ink)}
+.bn{margin:60px 0;border-radius:28px;background:var(--acc);color:var(--accink);padding:46px;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}.bn h3{font-family:var(--sf);font-weight:400;font-size:34px;margin:0;max-width:420px;line-height:1.1}.bn .btn{background:var(--accink);color:var(--acc)}
+footer{border-top:1px solid var(--ln);padding:30px 0;color:var(--mute);font-size:13px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.sc{position:fixed;inset:0;background:rgba(0,0,0,.45);opacity:0;pointer-events:none;transition:.3s;z-index:20}.sc.on{opacity:1;pointer-events:auto}
+.dr{position:fixed;top:0;right:0;bottom:0;width:min(400px,100%);background:var(--bg);z-index:30;transform:translateX(105%);transition:transform .45s cubic-bezier(.2,.9,.25,1);padding:24px;display:flex;flex-direction:column}.dr.on{transform:none}
+.dr h3{font-family:var(--sf);font-weight:400;font-size:28px;margin:0 0 10px}.dl{flex:1;overflow:auto}
+.ci{display:flex;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid var(--ln)}.ci .t{width:56px;height:68px;border-radius:10px;background:var(--card);border:1px solid var(--ln);display:grid;place-items:center}.ci svg{width:38px}.ci .m{flex:1;font-size:14px}.ci p{margin:2px 0 0;color:var(--mute);font-size:12px}
+.q{display:flex;gap:8px;align-items:center}.q button{width:26px;height:26px;border-radius:50%;border:1px solid var(--ln);background:none;color:var(--ink);cursor:pointer}
+.tot{display:flex;justify-content:space-between;font-size:18px;margin:16px 0}
+.ts{position:fixed;bottom:calc(22px + env(safe-area-inset-bottom,0px));left:50%;transform:translate(-50%,90px);background:var(--ink);color:var(--bg);padding:12px 20px;border-radius:99px;font-size:14px;z-index:50;transition:.4s cubic-bezier(.2,.9,.25,1)}.ts.on{transform:translate(-50%,0)}
+</style></head><body>
+<div class="bar">Free shipping across India on orders above ₹999 · COD available</div>
+<header><div class="w hd"><div class="logo">Maison<i>.</i></div><nav><a href="#shop">Shirts</a><a href="#shop">Tees</a><a href="#shop">New in</a><a href="#about">Story</a></nav><button class="cb" id="cb">Bag (<span id="n">0</span>)</button></div></header>
+<main class="w">
+<section class="hero"><div><small>Autumn / Winter 2026</small><h1>Shirts made for <em>every</em> day.</h1><p>Soft cotton, honest prices and a fit that just works. Designed in India, delivered to your door.</p><button class="btn" id="go">Shop the collection</button><button class="btn o">Our story</button></div>
+<div class="arch" id="arch"></div></section></main>
+<div class="mq"><div id="mq"></div></div>
+<main class="w" id="shop"><div class="sh"><h2>The collection</h2><div class="fl" id="fl"></div></div><div class="g" id="g"></div>
+<div class="bn" id="about"><h3>Join the list. Get ₹150 off your first order.</h3><button class="btn" id="sub">Subscribe</button></div>
+<footer><span>© 2026 Maison Shirts</span><span>Razorpay secured · Ships in 2–5 days</span></footer></main>
+<div class="sc" id="sc"></div><div class="dr" id="dr"></div><div class="ts" id="ts"></div>
+<script>
+const $=i=>document.getElementById(i),inr=n=>"₹"+n.toLocaleString("en-IN");
+const CL={Ecru:"#e9dfcc",Sage:"#8da38a",Navy:"#243b63",Clay:"#c0714d",Ink:"#26262b",Sky:"#8db6dc",Blush:"#e3b4b0"};
+const P=[["Oxford Button-Down","Shirts",1299,["Sky","Ecru","Navy"],1],["Linen Camp Shirt","Shirts",1099,["Sage","Ecru","Clay"],0],["Heavy Crew Tee","Tees",599,["Ink","Ecru","Sage"],1],["Slim Formal","Shirts",1499,["Ecru","Navy","Blush"],0],["Flannel Check","Shirts",1199,["Clay","Navy","Sage"],0],["Boxy Pocket Tee","Tees",649,["Blush","Ink","Sky"],1],["Mandarin Collar","Shirts",1249,["Sage","Ink","Ecru"],0],["Pique Polo","Tees",799,["Navy","Ecru","Clay"],0]].map((a,i)=>({id:i,n:a[0],c:a[1],p:a[2],cols:a[3],nw:a[4],sel:a[3][0]}));
+let cat="All",cart=[];
+const sh=(c,t)=>t?`<svg viewBox="0 0 100 100"><path d="M30 14l-20 12 8 14 10-5v46h44V35l10 5 8-14-20-12c-3 6-9 9-20 9s-17-3-20-9z" fill="${c}"/><path d="M38 14c3 6 7 8 12 8s9-2 12-8" fill="none" stroke="rgba(0,0,0,.18)" stroke-width="2"/></svg>`:`<svg viewBox="0 0 100 100"><path d="M32 12l-22 12 7 16 10-5v45h46V35l10 5 7-16-22-12-8 8-10-3-10 3z" fill="${c}"/><path d="M50 18v70M43 14l7 12 7-12" fill="none" stroke="rgba(0,0,0,.2)" stroke-width="2"/><circle cx="50" cy="40" r="1.300" fill="rgba(0,0,0,.3)"/><circle cx="50" cy="54" r="1.300" fill="rgba(0,0,0,.3)"/><circle cx="50" cy="68" r="1.300" fill="rgba(0,0,0,.3)"/></svg>`;
+$("arch").innerHTML=sh("#f3eee6",0);$("mq").innerHTML=("<span>Cotton</span>Linen<span>Oxford</span>Flannel<span>Pique</span>Poplin<span>Twill</span>").repeat(8);
+function rf(){$("fl").innerHTML=["All","Shirts","Tees"].map(c=>`<button class="${c==cat?"on":""}" data-f="${c}">${c}</button>`).join("")}
+function rg(){$("g").innerHTML=P.filter(p=>cat=="All"||p.c==cat).map((p,i)=>`<div class="c" style="animation-delay:${i*60}ms"><div class="pi" data-a="${p.id}">${p.nw?'<span class="nw">New</span>':""}${sh(CL[p.sel],p.c=="Tees")}<button class="qa" data-a="${p.id}">Quick add · M</button></div><div class="mt"><b>${p.n}</b><span>${inr(p.p)}</span></div><div class="sw">${p.cols.map(c=>`<i class="${c==p.sel?"on":""}" data-s="${p.id}" data-c="${c}" style="background:${CL[c]}"></i>`).join("")}</div></div>`).join("")}
+function ts(m){const t=$("ts");t.textContent=m;t.classList.add("on");clearTimeout(ts.h);ts.h=setTimeout(()=>t.classList.remove("on"),1600)}
+function un(){$("n").textContent=cart.reduce((a,b)=>a+b.q,0)}
+function dr(){const t=cart.reduce((a,b)=>a+b.q*b.p.p,0);$("dr").innerHTML=`<h3>Your bag</h3><div class="dl">${cart.length?cart.map((x,i)=>`<div class="ci"><div class="t">${sh(CL[x.c],x.p.c=="Tees")}</div><div class="m">${x.p.n}<p>${x.c} · M · ${inr(x.p.p)}</p></div><div class="q"><button data-q="${i}" data-d="-1">−</button>${x.q}<button data-q="${i}" data-d="1">+</button></div></div>`).join(""):'<p style="color:var(--mute)">Your bag is empty.</p>'}</div>${cart.length?`<div class="tot"><span>Total</span><b>${inr(t)}</b></div><button class="btn" id="pay">Checkout with Razorpay</button>`:""}<button class="btn o" id="cl" style="margin:10px 0 0">Continue shopping</button>`}
+function od(){dr();$("dr").classList.add("on");$("sc").classList.add("on")}function cd(){$("dr").classList.remove("on");$("sc").classList.remove("on")}
+document.addEventListener("click",e=>{const t=e.target.closest("[data-f],[data-a],[data-s],[data-q]"),i=e.target.closest("button,#sc")?.id;
+if(i=="cb")return od();if(i=="sc"||i=="cl")return cd();if(i=="go")return $("shop").scrollIntoView();if(i=="pay")return ts("Razorpay checkout opens here");if(i=="sub")return ts("Subscribed (demo)");if(!t)return;const d=t.dataset;
+if(d.f){cat=d.f;rf();rg()}else if(d.s){const p=P[+d.s];p.sel=d.c;rg()}
+else if(d.a){const p=P[+d.a],k=cart.find(x=>x.p.id==p.id&&x.c==p.sel);k?k.q++:cart.push({p,c:p.sel,q:1});un();ts(p.n+" added to bag")}
+else if(d.q){const x=cart[+d.q];x.q+=+d.d;if(x.q<1)cart.splice(+d.q,1);un();dr()}});
+rf();rg();
+</script></body></html>
