@@ -1,76 +1,550 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Threadly Store</title>
-<style>
-:root{--ink:#f5f3ff;--mute:#a9a6c4;--glass:rgba(255,255,255,.08);--bd:rgba(255,255,255,.14);--acc:linear-gradient(135deg,#a78bfa,#f472b6);box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-@media(prefers-color-scheme:light){:root:not([data-theme="dark"]){--ink:#1c1530;--mute:#6b6590;--glass:rgba(255,255,255,.55);--bd:rgba(255,255,255,.8)}}
-*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html,body{height:100%;margin:0}
-body{font-family:Inter,system-ui,sans-serif;color:var(--ink);display:flex;justify-content:center;background:#0b0816}
-.app{position:relative;width:100%;max-width:430px;height:100%;overflow:hidden;background:#0b0816}
-@media(prefers-color-scheme:light){:root:not([data-theme="dark"]) .app{background:#efeaff}}
-.bg{position:absolute;inset:0;overflow:hidden}.bg i{position:absolute;border-radius:50%;filter:blur(70px);opacity:.75;animation:fl 14s ease-in-out infinite alternate}
-.bg i:nth-child(1){width:300px;height:300px;background:#7c3aed;top:-80px;left:-80px}.bg i:nth-child(2){width:260px;height:260px;background:#ec4899;top:260px;right:-100px;animation-delay:-5s}.bg i:nth-child(3){width:280px;height:280px;background:#06b6d4;bottom:-60px;left:-60px;animation-delay:-9s;opacity:.5}
-@keyframes fl{to{transform:translate(40px,60px) scale(1.2)}}
-@media(min-width:500px){body{align-items:center;background:#1a1530}.app{height:min(880px,96%);border-radius:38px;box-shadow:0 30px 90px rgba(0,0,0,.5)}}
-.sc{position:absolute;inset:0;overflow-y:auto;padding:18px 18px 120px;scrollbar-width:none}.sc::-webkit-scrollbar{display:none}
-.gl{background:var(--glass);border:1px solid var(--bd);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
-.top{display:flex;justify-content:space-between;align-items:center}.top h1{margin:0;font-size:22px;letter-spacing:-.5px}.top small{color:var(--mute)}
-.ib{width:44px;height:44px;border-radius:15px;display:grid;place-items:center;cursor:pointer;position:relative;color:var(--ink)}
-.bdg{position:absolute;top:-5px;right:-5px;background:#f43f5e;color:#fff;font-size:10px;font-weight:700;width:18px;height:18px;border-radius:9px;display:grid;place-items:center;transform:scale(0);transition:.25s cubic-bezier(.3,1.6,.5,1)}.bdg.on{transform:none}
-svg.s{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-.hero{margin:18px 0;border-radius:28px;padding:24px;position:relative;overflow:hidden;min-height:190px}
-.hero h2{font-size:34px;line-height:1.02;margin:6px 0 14px;letter-spacing:-1.2px;max-width:190px}.hero p{margin:0;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--mute)}
-.hero .sh{position:absolute;right:-6px;top:20px;width:170px;filter:drop-shadow(0 20px 30px rgba(0,0,0,.4));animation:bob 5s ease-in-out infinite alternate}@keyframes bob{to{transform:translateY(-12px) rotate(4deg)}}
-.btn{border:0;background:var(--acc);color:#fff;font-weight:700;border-radius:14px;padding:12px 20px;cursor:pointer;transition:transform .15s}.btn:active{transform:scale(.95)}
-.chips{display:flex;gap:8px;overflow-x:auto;margin:0 -18px 16px;padding:0 18px;scrollbar-width:none}
-.chip{flex:none;padding:9px 18px;border-radius:999px;cursor:pointer;font-size:14px;transition:.25s}.chip.on{background:var(--acc);border-color:transparent;color:#fff}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.card{border-radius:24px;padding:10px;cursor:pointer;animation:up .5s both;transition:transform .25s}.card:active{transform:scale(.96)}@keyframes up{from{opacity:0;transform:translateY(18px)}}
-.im{height:150px;border-radius:18px;display:grid;place-items:center;position:relative;background:radial-gradient(circle at 50% 40%,rgba(255,255,255,.22),transparent 70%)}.im svg{width:110px;transition:.4s}.card:hover .im svg{transform:scale(1.1) rotate(-3deg)}
-.hr{position:absolute;top:6px;right:6px;width:32px;height:32px;border-radius:50%;border:0;display:grid;place-items:center;cursor:pointer;color:var(--ink)}.hr.on{color:#f43f5e}.hr.on svg{fill:currentColor}
-.card h4{margin:10px 4px 2px;font-size:14px}.card .pr{display:flex;justify-content:space-between;align-items:center;margin:6px 4px 2px}.pr s{color:var(--mute);font-size:12px;margin-left:4px}
-.ad{width:30px;height:30px;border-radius:10px;border:0;background:var(--acc);color:#fff;font-size:18px;cursor:pointer}
-.nav{position:absolute;left:16px;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));height:64px;border-radius:26px;display:flex;justify-content:space-around;align-items:center;z-index:5}
-.nav button{background:none;border:0;color:var(--mute);cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:11px}.nav .on{color:var(--ink)}
-.scrim{position:absolute;inset:0;background:rgba(0,0,0,.5);opacity:0;pointer-events:none;transition:.3s;z-index:20}.scrim.on{opacity:1;pointer-events:auto}
-.sh2{position:absolute;left:0;right:0;bottom:0;border-radius:30px 30px 0 0;padding:14px 20px calc(22px + env(safe-area-inset-bottom,0px));transform:translateY(105%);transition:transform .5s cubic-bezier(.2,.9,.25,1);z-index:30;max-height:88%;overflow:auto;background:rgba(24,18,48,.88)}
-@media(prefers-color-scheme:light){:root:not([data-theme="dark"]) .sh2{background:rgba(255,255,255,.9)}}
-.sh2.on{transform:none}.gb{width:44px;height:5px;border-radius:3px;background:var(--bd);margin:0 auto 14px}
-.bg2{height:220px;border-radius:22px;display:grid;place-items:center;background:radial-gradient(circle,rgba(167,139,250,.35),transparent 70%)}.bg2 svg{width:180px;transition:.3s}
-.l{font-size:13px;color:var(--mute);margin:14px 0 8px}.row{display:flex;gap:10px;flex-wrap:wrap}
-.sw{width:34px;height:34px;border-radius:50%;cursor:pointer;border:2px solid transparent;outline:1px solid var(--bd);transition:.2s}.sw.on{outline:2px solid var(--ink);transform:scale(1.12)}
-.sz{min-width:46px;height:42px;border-radius:12px;background:none;color:var(--ink);cursor:pointer;font-weight:600}.sz.on{background:var(--acc);border-color:transparent;color:#fff}
-.cta{width:100%;height:54px;margin-top:20px;font-size:16px}
-.ci{display:flex;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid var(--bd)}.ci .t{width:56px;height:56px;border-radius:14px;display:grid;place-items:center}.ci svg{width:40px}.ci .m{flex:1}.ci h5{margin:0;font-size:14px}.ci p{margin:2px 0 0;font-size:12px;color:var(--mute)}
-.q{display:flex;align-items:center;gap:8px}.q button{width:26px;height:26px;border-radius:8px;background:none;color:var(--ink);cursor:pointer}
-.tot{display:flex;justify-content:space-between;font-size:18px;font-weight:700;margin-top:16px}
-.toast{position:absolute;top:calc(14px + env(safe-area-inset-top,0px));left:50%;transform:translate(-50%,-90px);padding:10px 16px;border-radius:14px;font-size:13px;z-index:50;transition:.4s cubic-bezier(.2,.9,.25,1)}.toast.on{transform:translate(-50%,0)}
-</style></head><body><div class="app"><div class="bg"><i></i><i></i><i></i></div>
-<div class="sc"><div class="top"><div><small>Free shipping over ₹999</small><h1>Threadly</h1></div><div class="ib gl" id="cb"><svg class="s" viewBox="0 0 24 24"><path d="M6 7h12l-1 13H7z"/><path d="M9 7a3 3 0 016 0"/></svg><span class="bdg" id="bd">0</span></div></div>
-<div class="hero gl"><p>Autumn drop</p><h2>Wear the new<br>season</h2><button class="btn" id="shop">Shop shirts</button><svg class="sh" viewBox="0 0 100 100"><path d="M32 12l-22 12 7 16 10-5v45h46V35l10 5 7-16-22-12-8 8-10-3-10 3z" fill="#a78bfa"/><path d="M50 18v70M43 14l7 12 7-12" fill="none" stroke="rgba(0,0,0,.25)" stroke-width="2"/></svg></div>
-<div class="chips" id="ch"></div><div class="grid" id="g"></div></div>
-<div class="nav gl"><button class="on"><svg class="s" viewBox="0 0 24 24"><path d="M4 11l8-7 8 7v9H4z"/></svg>Home</button><button id="fv"><svg class="s" viewBox="0 0 24 24"><path d="M12 20s-7-4.500-7-10a4 4 0 017-2.500A4 4 0 0119 10c0 5.500-7 10-7 10z"/></svg>Saved</button><button id="c2"><svg class="s" viewBox="0 0 24 24"><path d="M6 7h12l-1 13H7z"/><path d="M9 7a3 3 0 016 0"/></svg>Cart</button><button><svg class="s" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4-6 8-6s7 2 8 6"/></svg>Me</button></div>
-<div class="scrim" id="sc"></div><div class="sh2 gl" id="sh"></div><div class="toast gl" id="ts"></div></div>
-<script>
-const C={Violet:"#8b5cf6",White:"#f4f4f1",Olive:"#7c8c4a",Rust:"#c2603a",Sky:"#7fb2e5",Black:"#26262b"},$=i=>document.getElementById(i);
-const P=[[1,"Oxford Button-Down","Formal",899,1299,["Sky","White","Violet"]],[2,"Linen Summer Shirt","Casual",749,999,["White","Olive","Sky"]],[3,"Graphic Tee","T-Shirts",499,699,["Black","White","Rust"]],[4,"Slim Fit Formal","Formal",1099,1599,["White","Violet","Black"]],[5,"Flannel Check","Casual",999,1399,["Rust","Olive","Violet"]],[6,"Plain Crew Tee","T-Shirts",399,599,["White","Black","Olive"]]].map(a=>({id:a[0],n:a[1],c:a[2],p:a[3],o:a[4],col:a[5]}));
-let cat="All",sv=new Set,cart=[],cur,sel,view="h";
-const sh=(c,t)=>t?`<svg viewBox="0 0 100 100"><path d="M30 14l-20 12 8 14 10-5v46h44V35l10 5 8-14-20-12c-3 6-9 9-20 9s-17-3-20-9z" fill="${c}"/></svg>`:`<svg viewBox="0 0 100 100"><path d="M32 12l-22 12 7 16 10-5v45h46V35l10 5 7-16-22-12-8 8-10-3-10 3z" fill="${c}"/><path d="M50 18v70M43 14l7 12 7-12" fill="none" stroke="rgba(0,0,0,.25)" stroke-width="2"/></svg>`;
-const inr=n=>"₹"+n.toLocaleString("en-IN");
-function ts(m){const t=$("ts");t.textContent=m;t.classList.add("on");clearTimeout(ts.h);ts.h=setTimeout(()=>t.classList.remove("on"),1500)}
-function rc(){$("ch").innerHTML=["All","Formal","Casual","T-Shirts"].map(c=>`<div class="chip gl ${c==cat?"on":""}" data-c="${c}">${c}</div>`).join("")}
-function rg(){const l=P.filter(p=>(cat=="All"||p.c==cat)&&(view!="s"||sv.has(p.id)));
-$("g").innerHTML=l.map((p,i)=>`<div class="card gl" style="animation-delay:${i*60}ms" data-id="${p.id}"><div class="im"><button class="hr gl ${sv.has(p.id)?"on":""}" data-h="${p.id}"><svg class="s" width="16" viewBox="0 0 24 24"><path d="M12 20s-7-4.500-7-10a4 4 0 017-2.500A4 4 0 0119 10c0 5.500-7 10-7 10z"/></svg></button>${sh(C[p.col[0]],p.c=="T-Shirts")}</div><h4>${p.n}</h4><div class="pr"><span><b>${inr(p.p)}</b><s>${inr(p.o)}</s></span><button class="ad" data-a="${p.id}">+</button></div></div>`).join("")||'<p style="grid-column:1/-1;text-align:center;color:var(--mute)">Nothing saved yet</p>'}
-function op(h){$("sh").innerHTML='<div class="gb"></div>'+h;$("sh").classList.add("on");$("sc").classList.add("on")}
-function cl(){$("sh").classList.remove("on");$("sc").classList.remove("on")}
-function dp(){op(`<div class="bg2">${sh(C[sel.c],cur.c=="T-Shirts")}</div><h2 style="margin:16px 0 2px">${cur.n}</h2><div class="l">Colour: ${sel.c}</div><div class="row">${cur.col.map(c=>`<div class="sw ${c==sel.c?"on":""}" data-sw="${c}" style="background:${C[c]}"></div>`).join("")}</div><div class="l">Size</div><div class="row">${["S","M","L","XL","XXL"].map(s=>`<button class="sz gl ${s==sel.s?"on":""}" data-sz="${s}">${s}</button>`).join("")}</div><button class="btn cta" id="ac">Add to cart · ${inr(cur.p)}</button>`)}
-function add(p,c,s){const k=p.id+c+s,f=cart.find(x=>x.k==k);f?f.q++:cart.push({k,p,c,s,q:1});ub();ts("Added to cart")}
-function ub(){const n=cart.reduce((a,b)=>a+b.q,0);$("bd").textContent=n;$("bd").classList.toggle("on",n>0)}
-function sc(){const t=cart.reduce((a,b)=>a+b.q*b.p.p,0);op('<h2 style="margin:0 0 6px">Your cart</h2>'+(cart.length?cart.map((x,i)=>`<div class="ci"><div class="t gl">${sh(C[x.c],x.p.c=="T-Shirts")}</div><div class="m"><h5>${x.p.n}</h5><p>${x.c} · ${x.s} · ${inr(x.p.p)}</p></div><div class="q"><button class="gl" data-q="${i}" data-d="-1">−</button>${x.q}<button class="gl" data-q="${i}" data-d="1">+</button></div></div>`).join("")+`<div class="tot"><span>Total</span><span>${inr(t)}</span></div><button class="btn cta" id="pay">Pay with Razorpay</button>`:'<p style="text-align:center;color:var(--mute);padding:30px 0">Your cart is empty</p>'))}
-document.addEventListener("click",e=>{const t=e.target.closest("[data-c],[data-h],[data-a],[data-id],[data-sw],[data-sz],[data-q]"),i=e.target.id;
-if(e.target.closest("#cb,#c2"))return sc();if(i=="sc")return cl();if(i=="shop")return $("g").scrollIntoView({behavior:"smooth"});
-if(e.target.closest("#fv")){view=view=="s"?"h":"s";rg();return}
-if(i=="ac"){add(cur,sel.c,sel.s);return cl()}if(i=="pay")return ts("Razorpay checkout opens here");if(!t)return;const d=t.dataset;
-if(d.c){cat=d.c;rc();rg()}else if(d.h){sv.has(+d.h)?sv.delete(+d.h):sv.add(+d.h);rg()}else if(d.a){const p=P.find(x=>x.id==+d.a);add(p,p.col[0],"M")}
-else if(d.id){cur=P.find(x=>x.id==+d.id);sel={c:cur.col[0],s:"M"};dp()}else if(d.sw){sel.c=d.sw;dp()}else if(d.sz){sel.s=d.sz;dp()}
-else if(d.q){const x=cart[+d.q];x.q+=+d.d;if(x.q<1)cart.splice(+d.q,1);ub();sc()}});
-rc();rg();
-</script></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Threadly Storefront</title>
+  
+  <!-- React, ReactDOM, Babel & Tailwind CSS -->
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Framer Motion & Lucide Icons -->
+  <script src="https://unpkg.com/framer-motion@10.16.4/dist/framer-motion.js"></script>
+  <script src="https://unpkg.com/lucide-react@0.263.1/dist/umd/lucide-react.js"></script>
+
+  <!-- Supabase JS Client CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#f0fdf4',
+              100: '#dcfce7',
+              500: '#22c55e',
+              600: '#16a34a',
+              700: '#15803d',
+              900: '#052e16',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+      background-color: #0f172a;
+      color: #f8fafc;
+    }
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState, useEffect } = React;
+    const Motion = window.framerMotion ? window.framerMotion.motion : null;
+    const AnimatePresence = window.framerMotion ? window.framerMotion.AnimatePresence : null;
+
+    // TODO: Insert your actual Supabase URL and Anon/Public Key here
+    const SUPABASE_URL = 'https://rckydmhxdgpuexewgtuz.supabase.co/';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJja3lkbWh4ZGdwdWV4ZXdndHV6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTMyNjA2MjksImV4cCI6MjEwODgzNjYyOX0.z-3mAtuszG0vbYnt5QSY-xO7ybCWSxekdqEbcV2EMIY';
+    const supabase = window.supabase ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
+
+    // Lucide Icons
+    const ShoppingBag = window.lucide ? window.lucide.ShoppingBag : () => null;
+    const Heart = window.lucide ? window.lucide.Heart : () => null;
+    const X = window.lucide ? window.lucide.X : () => null;
+    const Plus = window.lucide ? window.lucide.Plus : () => null;
+    const Minus = window.lucide ? window.lucide.Minus : () => null;
+    const ArrowRight = window.lucide ? window.lucide.ArrowRight : () => null;
+    const Sparkles = window.lucide ? window.lucide.Sparkles : () => null;
+    const Home = window.lucide ? window.lucide.Home : () => null;
+    const Compass = window.lucide ? window.lucide.Compass : () => null;
+
+    function App() {
+      const [products, setProducts] = useState([]);
+      const [categories, setCategories] = useState(['All']);
+      const [variantsMap, setVariantsMap] = useState({});
+      const [loading, setLoading] = useState(true);
+      const [activeTab, setActiveTab] = useState('home');
+      const [selectedCategory, setSelectedCategory] = useState('All');
+      const [cart, setCart] = useState([]);
+      const [favorites, setFavorites] = useState([]);
+      const [isCartOpen, setIsCartOpen] = useState(false);
+      const [selectedProduct, setSelectedProduct] = useState(null);
+      const [selectedSize, setSelectedSize] = useState('');
+      const [promoCode, setPromoCode] = useState('');
+      const [discount, setDiscount] = useState(0);
+      const [toastMessage, setToastMessage] = useState(null);
+      const [user, setUser] = useState(null);
+
+      // Fetch categories, products, and variants from Supabase
+      useEffect(() => {
+        async function loadStoreData() {
+          if (!supabase) {
+            setLoading(false);
+            return;
+          }
+
+          try {
+            // Get current session user
+            const { data: { session } } = await supabase.auth.getSession();
+            if (session?.user) {
+              setUser(session.user);
+              // Fetch user wishlist
+              const { data: wishData } = await supabase
+                .from('wishlist')
+                .select('product_id')
+                .eq('user_id', session.user.id);
+              if (wishData) setFavorites(wishData.map(w => w.product_id));
+            }
+
+            // Fetch categories
+            const { data: catData } = await supabase.from('categories').select('*');
+            if (catData) {
+              setCategories(['All', ...catData.map(c => c.name)]);
+            }
+
+            // Fetch products and variants
+            const { data: prodData } = await supabase
+              .from('products')
+              .select('*, categories(name), product_variants(*)')
+              .eq('is_active', true);
+
+            if (prodData) {
+              setProducts(prodData);
+              // Map variants by product ID
+              const vMap = {};
+              prodData.forEach(p => {
+                vMap[p.id] = p.product_variants || [];
+              });
+              setVariantsMap(vMap);
+            }
+          } catch (err) {
+            console.error('Error loading Supabase data:', err);
+          } finally {
+            setLoading(false);
+          }
+        }
+
+        loadStoreData();
+      }, []);
+
+      const showToast = (msg) => {
+        setToastMessage(msg);
+        setTimeout(() => setToastMessage(null), 2500);
+      };
+
+      const toggleFavorite = async (product) => {
+        if (!user) {
+          showToast('Please sign in to save favorites');
+          return;
+        }
+        const isFav = favorites.includes(product.id);
+        if (isFav) {
+          setFavorites(prev => prev.filter(id => id !== product.id));
+          await supabase.from('wishlist').delete().match({ user_id: user.id, product_id: product.id });
+          showToast('Removed from wishlist');
+        } else {
+          setFavorites(prev => [...prev, product.id]);
+          await supabase.from('wishlist').insert({ user_id: user.id, product_id: product.id });
+          showToast('Added to wishlist');
+        }
+      };
+
+      const addToCart = (product, variant) => {
+        if (!variant) {
+          showToast('Please select a size/variant');
+          return;
+        }
+        const cartItemId = variant.id;
+        setCart(prev => {
+          const existing = prev.find(item => item.cartItemId === cartItemId);
+          if (existing) {
+            return prev.map(item => item.cartItemId === cartItemId ? { ...item, qty: item.qty + 1 } : item);
+          }
+          return [...prev, {
+            ...product,
+            cartItemId,
+            variantId: variant.id,
+            selectedSize: variant.size,
+            selectedColor: variant.color,
+            qty: 1
+          }];
+        });
+        showToast(`Added ${product.name} (${variant.size}) to bag`);
+        setSelectedProduct(null);
+      };
+
+      const updateQty = (cartItemId, delta) => {
+        setCart(prev => prev.map(item => {
+          if (item.cartItemId === cartItemId) {
+            const newQty = item.qty + delta;
+            return newQty > 0 ? { ...item, qty: newQty } : null;
+          }
+          return item;
+        }).filter(Boolean));
+      };
+
+      const subtotal = cart.reduce((sum, item) => sum + Number(item.price) * item.qty, 0);
+      const total = Math.max(0, subtotal - discount);
+
+      const applyPromo = () => {
+        if (promoCode.toUpperCase() === 'THREAD10') {
+          setDiscount(subtotal * 0.1);
+          showToast('10% Promo applied!');
+        } else if (promoCode.toUpperCase() === 'THREAD20') {
+          setDiscount(subtotal * 0.2);
+          showToast('20% Promo applied!');
+        } else {
+          showToast('Invalid promo code');
+        }
+      };
+
+      // Handle checkout using Supabase RPC `place_order`[cite: 3]
+      const handleCheckout = async () => {
+        if (!user) {
+          showToast('Please sign in to place an order');
+          return;
+        }
+        if (cart.length === 0) return;
+
+        try {
+          const itemsPayload = cart.map(item => ({
+            variant_id: item.variantId,
+            qty: item.qty
+          }));
+
+          // Dummy sample address payload matching your schema requirements[cite: 3]
+          const addressPayload = {
+            name: user.user_metadata?.full_name || 'Valued Customer',
+            phone: user.phone || '9999999999',
+            line1: '123 Main Street',
+            city: 'Hyderabad',
+            state: 'Telangana',
+            pincode: '500081'
+          };
+
+          const { data, error } = await supabase.rpc('place_order', {
+            p_items: itemsPayload,
+            p_address: addressPayload,
+            p_method: 'razorpay'
+          });
+
+          if (error) {
+            throw error;
+          }
+
+          showToast('Order placed successfully!');
+          setCart([]);
+          setIsCartOpen(false);
+        } catch (err) {
+          console.error('Checkout error:', err);
+          showToast(err.message || 'Checkout failed');
+        }
+      };
+
+      const filteredProducts = selectedCategory === 'All' 
+        ? products 
+        : products.filter(p => p.categories?.name === selectedCategory || p.category === selectedCategory);
+
+      return (
+        <div className="max-w-md mx-auto min-h-screen bg-slate-950 text-slate-100 relative pb-24 shadow-2xl overflow-hidden border-x border-slate-800">
+          
+          {/* Header */}
+          <header className="sticky top-0 z-30 bg-slate-950/80 backdrop-blur-md border-b border-slate-800 px-5 py-4 flex items-center justify-between">
+            <div className="flex items-center space-x-2">
+              <div className="w-8 h-8 rounded-full bg-emerald-500 flex items-center justify-center font-bold text-slate-950 text-lg">
+                T
+              </div>
+              <span className="font-extrabold text-xl tracking-tight bg-gradient-to-r from-emerald-400 to-teal-300 bg-clip-text text-transparent">
+                threadly
+              </span>
+            </div>
+
+            <button 
+              onClick={() => setIsCartOpen(true)}
+              className="relative p-2 text-slate-300 hover:text-emerald-400 transition"
+            >
+              <ShoppingBag size={22} />
+              {cart.length > 0 && (
+                <span className="absolute top-1 right-1 bg-emerald-500 text-slate-950 font-bold text-xs w-4 h-4 rounded-full flex items-center justify-center">
+                  {cart.reduce((a, b) => a + b.qty, 0)}
+                </span>
+              )}
+            </button>
+          </header>
+
+          {/* Toast Notification */}
+          {toastMessage && (
+            <div className="fixed top-16 left-1/2 -translate-x-1/2 z-50 bg-emerald-500 text-slate-950 px-4 py-2 rounded-full font-semibold text-xs shadow-lg flex items-center gap-2">
+              <Sparkles size={14} /> {toastMessage}
+            </div>
+          )}
+
+          {/* Main Content */}
+          <main className="p-5 space-y-6">
+            
+            {/* Banner */}
+            <div className="relative rounded-2xl overflow-hidden bg-gradient-to-br from-slate-900 to-slate-800 border border-slate-800 p-6 shadow-xl">
+              <span className="text-xs uppercase tracking-widest text-emerald-400 font-bold">Supabase Live Sync</span>
+              <h1 className="text-2xl font-black mt-1 mb-2">Streetwear Redefined</h1>
+              <p className="text-slate-400 text-sm mb-4">Functional heavyweight essentials loaded directly from your database.</p>
+            </div>
+
+            {loading ? (
+              <div className="text-center py-16 text-slate-400 text-xs animate-pulse">
+                Syncing catalog from database...
+              </div>
+            ) : (
+              <>
+                {/* Category Chips */}
+                <div className="flex gap-2 overflow-x-auto no-scrollbar py-1">
+                  {categories.map(cat => (
+                    <button
+                      key={cat}
+                      onClick={() => setSelectedCategory(cat)}
+                      className={`px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition ${
+                        selectedCategory === cat 
+                          ? 'bg-emerald-500 text-slate-950 shadow-lg shadow-emerald-500/20' 
+                          : 'bg-slate-900 text-slate-400 border border-slate-800 hover:border-slate-700'
+                      }`}
+                    >
+                      {cat}
+                    </button>
+                  ))}
+                </div>
+
+                {/* Product Grid */}
+                <div className="grid grid-cols-2 gap-4">
+                  {filteredProducts.map(product => {
+                    const variants = variantsMap[product.id] || [];
+                    const firstVariant = variants[0];
+
+                    return (
+                      <div 
+                        key={product.id}
+                        className="bg-slate-900/60 border border-slate-800/80 rounded-2xl overflow-hidden flex flex-col justify-between group"
+                      >
+                        <div className="relative aspect-square overflow-hidden bg-slate-950">
+                          <img 
+                            src={product.image_url || 'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=800&auto=format&fit=crop&q=80'} 
+                            alt={product.name} 
+                            className="w-full h-full object-cover group-hover:scale-105 transition duration-500 cursor-pointer"
+                            onClick={() => { setSelectedProduct(product); setSelectedSize(firstVariant); }}
+                          />
+                          <button 
+                            onClick={() => toggleFavorite(product)}
+                            className="absolute top-2.5 right-2.5 p-2 rounded-full bg-slate-950/60 backdrop-blur-md text-slate-300 hover:text-rose-500 transition"
+                          >
+                            <Heart size={15} className={favorites.includes(product.id) ? "fill-rose-500 text-rose-500" : ""} />
+                          </button>
+                          {product.is_new && (
+                            <span className="absolute top-2.5 left-2.5 bg-emerald-500/90 text-slate-950 text-[10px] font-extrabold px-2 py-0.5 rounded-md backdrop-blur-sm">
+                              NEW
+                            </span>
+                          )}
+                        </div>
+
+                        <div className="p-3 flex-1 flex flex-col justify-between">
+                          <div>
+                            <span className="text-[10px] text-slate-500 uppercase tracking-wider">{product.categories?.name || 'Apparel'}</span>
+                            <h3 
+                              onClick={() => { setSelectedProduct(product); setSelectedSize(firstVariant); }}
+                              className="text-xs font-bold text-slate-200 line-clamp-1 cursor-pointer hover:text-emerald-400 transition"
+                            >
+                              {product.name}
+                            </h3>
+                          </div>
+
+                          <div className="mt-3 flex items-center justify-between">
+                            <span className="text-sm font-extrabold text-slate-100">${product.price}</span>
+                            <button 
+                              onClick={() => addToCart(product, firstVariant)}
+                              className="p-2 bg-slate-800 hover:bg-emerald-500 hover:text-slate-950 rounded-xl transition text-slate-300"
+                            >
+                              <Plus size={14} />
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </>
+            )}
+          </main>
+
+          {/* Quick-View Modal */}
+          {selectedProduct && (
+            <div className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex items-end justify-center p-0">
+              <div className="bg-slate-900 border-t border-slate-800 rounded-t-3xl w-full max-w-md p-6 space-y-4 max-h-[85vh] overflow-y-auto no-scrollbar">
+                <div className="flex justify-between items-center">
+                  <span className="text-xs font-bold text-emerald-400 uppercase">Select Variant</span>
+                  <button onClick={() => setSelectedProduct(null)} className="p-1 text-slate-400 hover:text-white">
+                    <X size={20} />
+                  </button>
+                </div>
+
+                <img src={selectedProduct.image_url} className="w-full h-56 object-cover rounded-2xl" />
+
+                <div>
+                  <h2 className="text-lg font-extrabold text-slate-100">{selectedProduct.name}</h2>
+                  <p className="text-xl font-black text-emerald-400 mt-1">${selectedProduct.price}</p>
+                  <p className="text-xs text-slate-400 mt-2 leading-relaxed">{selectedProduct.description}</p>
+                </div>
+
+                <div>
+                  <label className="text-xs text-slate-400 font-bold block mb-2">Available Size & Color</label>
+                  <div className="flex flex-wrap gap-2">
+                    {(variantsMap[selectedProduct.id] || []).map(v => (
+                      <button
+                        key={v.id}
+                        onClick={() => setSelectedSize(v)}
+                        className={`px-3 py-1.5 text-xs font-semibold rounded-lg border transition ${
+                          selectedSize?.id === v.id
+                            ? 'bg-emerald-500 text-slate-950 border-emerald-500 font-bold'
+                            : 'bg-slate-800 text-slate-300 border-slate-700'
+                        }`}
+                      >
+                        {v.size} / {v.color} ({v.stock} left)
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                <button 
+                  onClick={() => addToCart(selectedProduct, selectedSize)}
+                  className="w-full bg-emerald-500 text-slate-950 font-bold py-3 rounded-xl text-sm shadow-lg shadow-emerald-500/20 hover:bg-emerald-400 transition"
+                >
+                  Add to Shopping Bag
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* Cart Drawer */}
+          {isCartOpen && (
+            <div className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex justify-end">
+              <div className="bg-slate-900 w-full max-w-md h-full flex flex-col justify-between p-6 shadow-2xl border-l border-slate-800">
+                <div className="flex justify-between items-center border-b border-slate-800 pb-4">
+                  <div className="flex items-center gap-2">
+                    <ShoppingBag className="text-emerald-400" size={20} />
+                    <h2 className="font-bold text-slate-100">Your Bag ({cart.length})</h2>
+                  </div>
+                  <button onClick={() => setIsCartOpen(false)} className="p-1 text-slate-400 hover:text-white">
+                    <X size={20} />
+                  </button>
+                </div>
+
+                {/* Cart Items */}
+                <div className="flex-1 overflow-y-auto my-4 space-y-4 no-scrollbar">
+                  {cart.length === 0 ? (
+                    <div className="text-center py-12 text-slate-500 text-xs">
+                      Your shopping bag is empty.
+                    </div>
+                  ) : (
+                    cart.map(item => (
+                      <div key={item.cartItemId} className="flex gap-3 bg-slate-950/50 p-3 rounded-xl border border-slate-800/80">
+                        <img src={item.image_url} className="w-16 h-16 object-cover rounded-lg" />
+                        <div className="flex-1">
+                          <h4 className="text-xs font-bold text-slate-200 line-clamp-1">{item.name}</h4>
+                          <span className="text-[10px] text-slate-400">Size: {item.selectedSize} | {item.selectedColor}</span>
+                          <div className="flex items-center justify-between mt-2">
+                            <span className="text-xs font-extrabold text-emerald-400">${item.price * item.qty}</span>
+                            <div className="flex items-center gap-2 bg-slate-900 px-2 py-1 rounded-lg border border-slate-800">
+                              <button onClick={() => updateQty(item.cartItemId, -1)} className="text-slate-400 hover:text-white">
+                                <Minus size={12} />
+                              </button>
+                              <span className="text-xs font-bold">{item.qty}</span>
+                              <button onClick={() => updateQty(item.cartItemId, 1)} className="text-slate-400 hover:text-white">
+                                <Plus size={12} />
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    ))
+                  )}
+                </div>
+
+                {/* Checkout Section */}
+                <div className="border-t border-slate-800 pt-4 space-y-3">
+                  <div className="flex gap-2">
+                    <input 
+                      type="text" 
+                      placeholder="Promo (THREAD10)" 
+                      value={promoCode} 
+                      onChange={e => setPromoCode(e.target.value)}
+                      className="bg-slate-950 border border-slate-800 text-xs px-3 py-2 rounded-xl text-slate-200 focus:outline-none focus:border-emerald-500 flex-1 uppercase"
+                    />
+                    <button onClick={applyPromo} className="bg-slate-800 text-slate-200 px-3 py-2 rounded-xl text-xs font-bold hover:bg-slate-700">
+                      Apply
+                    </button>
+                  </div>
+
+                  <div className="space-y-1.5 text-xs text-slate-400">
+                    <div className="flex justify-between">
+                      <span>Subtotal</span>
+                      <span className="text-slate-200">${subtotal.toFixed(2)}</span>
+                    </div>
+                    {discount > 0 && (
+                      <div className="flex justify-between text-emerald-400">
+                        <span>Discount</span>
+                        <span>-${discount.toFixed(2)}</span>
+                      </div>
+                    )}
+                    <div className="flex justify-between text-sm font-bold text-slate-100 pt-2 border-t border-slate-800">
+                      <span>Total</span>
+                      <span className="text-emerald-400">${total.toFixed(2)}</span>
+                    </div>
+                  </div>
+
+                  <button 
+                    disabled={cart.length === 0}
+                    onClick={handleCheckout}
+                    className="w-full bg-emerald-500 disabled:opacity-50 text-slate-950 font-bold py-3 rounded-xl text-xs tracking-wider uppercase shadow-lg shadow-emerald-500/20"
+                  >
+                    Complete Checkout
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Bottom Mobile Navigation */}
+          <nav className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-md bg-slate-950/90 backdrop-blur-lg border-t border-slate-800/80 px-6 py-3 flex justify-around items-center z-40">
+            <button onClick={() => setActiveTab('home')} className={`flex flex-col items-center gap-1 ${activeTab === 'home' ? 'text-emerald-400' : 'text-slate-500'}`}>
+              <Home size={20} />
+              <span className="text-[10px] font-semibold">Home</span>
+            </button>
+            <button onClick={() => setActiveTab('explore')} className={`flex flex-col items-center gap-1 ${activeTab === 'explore' ? 'text-emerald-400' : 'text-slate-500'}`}>
+              <Compass size={20} />
+              <span className="text-[10px] font-semibold">Explore</span>
+            </button>
+          </nav>
+
+        </div>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+  </script>
+</body>
+</html>
